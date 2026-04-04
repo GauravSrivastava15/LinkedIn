@@ -1,5 +1,6 @@
 package com.project.linkedin.posts_service.service;
 
+import com.project.linkedin.posts_service.auth.UserContextHolder;
 import com.project.linkedin.posts_service.dto.PostCreateRequestDto;
 import com.project.linkedin.posts_service.dto.PostDto;
 import com.project.linkedin.posts_service.entity.Post;
@@ -30,6 +31,10 @@ public class PostService {
     }
 
     public PostDto getPostById(Long postId) {
+        log.info("Retrieving post with id,{}", postId);
+
+        Long userId = UserContextHolder.getCurrentUserId();
+
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found with id " + postId));
 
